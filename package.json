@@ -1,0 +1,12 @@
+{
+    "name": "dora"
+  , "version": "0.0.1"
+  , "private": true
+  , "dependencies": {
+      "express": "2.5.5",
+      "crawler": "git://github.com/joshfire/node-crawler.git",
+      "redis": ">= 0.0.1",
+      "coffee-script": ">= 0.0.1",
+      "jade": ">= 0.0.1"
+  }
+}
