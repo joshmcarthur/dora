@@ -1,5 +1,5 @@
 Crawler = require("crawler").Crawler
-Redis   = require("redis").createClient()
+Repository = require("./repository_model")
 
 class DoraScraper
   constructor: ->
@@ -37,7 +37,7 @@ class DoraScraper
       }
 
       console.log "Saving repository: #{JSON.stringify(repository)}"
-      Redis.hmset(repository.name, repository)
+      Repository.create(repository)
 
     process.exit()
 
