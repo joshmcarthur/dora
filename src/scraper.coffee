@@ -25,15 +25,20 @@ class DoraScraper
     @engine.queue [@url]
 
 
+
   processPage: (error, result, $) =>
     $("#{@list_selector} > #{@item_selector}:not(#{@item_selector}.last)").each (index, element) =>
       element = $(element)
-      repository = {}
-      repository.name = $.trim element.find(@title_selector).text()
-      repository.url = element.find(@title_selector).find('a').get(1).href
-      repository.description = $.trim element.find(@description_selector).text()
-      repository.indexed_at = new Date()
+      repository = {
+        name: $.trim element.find(@title_selector).text()
+        url: @host + element.find(@title_selector).find('a').get(1).href
+        description:  $.trim element.find(@description_selector).text()
+        indexed_at: new Date()
+      }
 
-      Redis.hmset(repository.url, repository)
+      console.log "Saving repository: #{JSON.stringify(repository)}"
+      Redis.hmset(repository.name, repository)
 
-new DoraScraper()
+    process.exit()
+
+module.exports = exports = DoraScraper
