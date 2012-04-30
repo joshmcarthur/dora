@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+
+// Load dependencies
+var DoraScraper = require('../lib/scraper')
+
+// Run scraper
+new DoraScraper()
