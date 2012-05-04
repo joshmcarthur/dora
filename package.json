@@ -5,8 +5,9 @@
   , "dependencies": {
       "express": "2.5.5",
       "crawler": "git://github.com/joshfire/node-crawler.git",
-      "mongodb": "> 0.0.1",
+      "mongoose": ">=0.0.1",
+      "stache": ">= 0.0.1",
       "coffee-script": ">= 0.0.1",
-      "jade": ">= 0.0.1"
+      "moment": ">= 0.0.1"
   }
 }
