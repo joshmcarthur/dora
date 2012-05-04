@@ -1,4 +1,5 @@
 express = require 'express'
+stache  = require 'stache'
 Repository = require '../lib/repository_model'
 
 app = module.exports = express.createServer()
@@ -6,7 +7,8 @@ app = module.exports = express.createServer()
 
 app.configure ->
   app.set 'views', __dirname + '/views'
-  app.set 'view engine', 'jade'
+  app.set 'view engine', 'mustache'
+  app.register '.mustache', stache
   app.use express.bodyParser()
   app.use express.methodOverride()
   app.use express.static(__dirname + '/public')
@@ -19,7 +21,8 @@ app.configure 'production', ->
   app.use express.errorHandler()
 
 app.get '/', (req, resp) ->
-  Repository.all (repos) ->
+  Repository.find {}, (err, repos) ->
+    throw err if err
     resp.render 'index', {repositories: repos}
 
 app.listen 3000
