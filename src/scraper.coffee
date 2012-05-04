@@ -27,18 +27,17 @@ class DoraScraper
 
 
   processPage: (error, result, $) =>
-    $("#{@list_selector} > #{@item_selector}:not(#{@item_selector}.last)").each (index, element) =>
+    elements = $("#{@list_selector} > #{@item_selector}:not(#{@item_selector}.last)")
+    elements.each (index, element) =>
       element = $(element)
       repository = {
-        name: $.trim element.find(@title_selector).text()
-        url: @host + element.find(@title_selector).find('a').get(1).href
-        description:  $.trim element.find(@description_selector).text()
-        indexed_at: new Date()
+        name: $.trim(element.find(@title_selector).text()),
+        url: (@host + element.find(@title_selector).find('a').get(1).href),
+        description: $.trim(element.find(@description_selector).text()),
       }
 
-      console.log "Saving repository: #{JSON.stringify(repository)}"
-      Repository.create(repository)
-
-    process.exit()
+      Repository.update repository, repository, {upsert: true}, (err) ->
+        throw err if err
+        process.exit() if (index == elements.length - 1)
 
 module.exports = exports = DoraScraper

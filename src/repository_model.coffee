@@ -1,25 +1,19 @@
-MongoDbServer = require('mongodb').Server
-MongoDb       = require('mongodb').Db
+moment       = require('moment')
+mongoose     = require('mongoose')
+Schema       = mongoose.Schema
+database_url = "mongodb://localhost/dora"
 
-class Repository
-  @create: (record) ->
-    @initDbAndTables =>
-      @collection.insert(record)
+mongoose.connect database_url
 
-  @initDbAndTables: (callback) ->
-    @mongodb_server = new MongoDbServer('localhost', 27017, auto_reconnect: true)
-    @db = new MongoDb("dora", @mongodb_server, (err, db) =>
-      @db = db
-      @db.createCollection('repositories', (err, collection) =>
-        @collection = collection
-        callback()
-      )
-    )
+Repository = new Schema(
+  name: {type: String, index: true},
+  description: String,
+  indexed_at: { type: Date, default: Date.now },
+  url: String
+)
 
-  @all: (callback) ->
-    @initDbAndTables =>
-      @collection.find().toArray (err, items) ->
-        callback(items)
+Repository.methods.human_indexed_date = ->
+  moment(this.indexed_at).format('dddd, MMMM Do YYYY')
 
+module.exports = exports = mongoose.model("Respository", Repository)
 
-module.exports = exports = Repository
