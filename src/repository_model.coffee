@@ -1,7 +1,7 @@
 moment       = require('moment')
 mongoose     = require('mongoose')
 Schema       = mongoose.Schema
-database_url = "mongodb://localhost/dora"
+database_url = process.env.MONGOLAB_URI || "mongodb://localhost/dora"
 
 mongoose.connect database_url
 
