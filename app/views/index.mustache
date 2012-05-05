@@ -1,10 +1,20 @@
 <h1>Github Explore Archive</h1>
 <p>Welcome to the Github Explore Archive</p>
 
+<form action="/search" method="get">
+  {{#query}}
+    <input placeholder="search" name="query" type="search" value="{{query}}" />
+  {{/query}}
+
+  {{^query}}
+    <input placeholder="search" name="query" type="search" />
+  {{/query}}
+</form>
+
 <ul>
   {{#repositories}}
     <li>
-      <h4><a href="{{url}}">{{name}}</a></h4>
+      <h4><a target="_blank":href="{{url}}">{{name}}</a></h4>
       <small>{{human_indexed_date}}</small>
       <p class="description">{{description}}</p>
     </li>

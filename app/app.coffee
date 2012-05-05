@@ -25,5 +25,14 @@ app.get '/', (req, resp) ->
     throw err if err
     resp.render 'index', {repositories: repos}
 
+app.get '/search', (req, resp) ->
+  resp.redirect('/') unless req.query.query
+
+  Repository
+    .where('name').regex(///^#{req.query.query}///)
+    .run (err, repos) ->
+      throw err if err
+      resp.render 'index', {repositories: repos, query: req.query.query}
+
 app.listen 3000
 console.log "Express server listening on port %d in %s mode", app.address().port, app.settings.env
