@@ -7,6 +7,7 @@ mongoose.connect database_url
 
 Repository = new Schema(
   name: {type: String, index: true},
+  user: {type: String, index: true},
   description: String,
   indexed_at: { type: Date, default: Date.now },
   url: String

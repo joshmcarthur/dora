@@ -30,8 +30,10 @@ class DoraScraper
     elements = $("#{@list_selector} > #{@item_selector}:not(#{@item_selector}.last)")
     elements.each (index, element) =>
       element = $(element)
+      github_name = $.trim(element.find(@title_selector).text()).split(' / ')
       repository = {
-        name: $.trim(element.find(@title_selector).text()),
+        name: github_name[1],
+        user: github_name[0],
         url: (@host + element.find(@title_selector).find('a').get(1).href),
         description: $.trim(element.find(@description_selector).text()),
       }
